@@ -1,0 +1,6 @@
+gurobipy
+joblib
+numpy
+pandas
+scikit-learn
+git+https://github.com/eminyous/fipe.git
