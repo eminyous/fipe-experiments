@@ -1,24 +1,23 @@
+import argparse
 import time
-
 from pathlib import Path
 
-import argparse
 import gurobipy as gp
 import joblib as jl
 import numpy as np
 import pandas as pd
-
 from fipe import FIPE, FeatureEncoder
 from sklearn.ensemble import (
     AdaBoostClassifier,
-    RandomForestClassifier,
     GradientBoostingClassifier,
+    RandomForestClassifier,
 )
 from sklearn.model_selection import train_test_split
-from utils import load, train, evaluate
+
+from utils import evaluate, load, train
 
 
-def get_model(ensemble, kwargs):
+def get_model(ensemble: str, kwargs):
     match ensemble:
         case "ab":
             model_cls = AdaBoostClassifier
@@ -53,7 +52,7 @@ def run(
 ):
     data, y, _ = load(dataset_path)
     encoder = FeatureEncoder(data)
-    X = encoder.X.values
+    X = encoder.X.to_numpy()
 
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=0.2, random_state=seed
@@ -78,6 +77,7 @@ def run(
         base=base,
         weights=w,
         encoder=encoder,
+        norm=norm,
         env=env,
         eps=eps,
         max_oracle_calls=max_oracle_calls,
@@ -100,7 +100,6 @@ def run(
     gurobis = output_path / "gurobi"
     gurobi_log = gurobis / f"{log_base}.log"
     pruner.build()
-    pruner.set_objective(norm)
     pruner.setParam("LogFile", str(gurobi_log))
     pruner.oracle.setParam("LogFile", str(gurobi_log))
     pruner.setParam("Threads", n_threads)

@@ -34,7 +34,7 @@ def load(dataset_path: Path):
 def train(
     model_cls, options: dict[str, Any], X, y, n_estimators: int, seed: int
 ):
-    if not model_cls in [
+    if model_cls not in [
         AdaBoostClassifier,
         RandomForestClassifier,
         GradientBoostingClassifier,
