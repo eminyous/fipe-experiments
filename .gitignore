@@ -168,7 +168,10 @@ cython_debug/
 .vscode/
 
 # Outputs
-outputs/
+outputs*/
+results*/
 
 # Cache
 *_cache/
+
+.*/
