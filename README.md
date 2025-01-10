@@ -23,11 +23,11 @@ where:
 - `</path/to/dataset1>`, `</path/to/dataset2>`, ..., `</path/to/datasetn>` are the paths to the datasets to use.
 - `</path/to/output>` is the path to the output folder.
 - `<ensemble>` is the ensemble method to use. It can be one of the following:
-    - `ab` for `AdaBoostClassifier`
-    - `rf` for `RandomForestClassifier`
-    - `gb` for `GradientBoostingClassifier`.
-    - `lgbm` for `LGBMClassifier`.
-    - `xgb` for `XGBClassifier`.
+  - `ab` for `AdaBoostClassifier`
+  - `rf` for `RandomForestClassifier`
+  - `gb` for `GradientBoostingClassifier`.
+  - `lgbm` for `LGBMClassifier`.
+  - `xgb` for `XGBClassifier`.
 - `<n1>`, `<n2>`, ..., `<nk>` are the number of estimators to use for the ensemble method.
 - `<seed1> <seed2> ... <seedn>` are the seeds to use for the random number generator.
 - `<norm>` is the norm to use for the `FIPE` algorithm. It can be one of the following: `0` for `L0 norm` or `1` for `L1 norm`.
@@ -35,7 +35,7 @@ where:
 The output folder will contain the experiment results in CSV format inside a subfolder named `csvs`. The results can be merged into a single CSV file by running the following command:
 
 ```bash
-python merge.py </path/to/csv1> </path/to/csv2> ... </path/to/csvn> </path/to/output>
+python agg.py </path/to/csv1> </path/to/csv2> ... </path/to/csvn> </path/to/output>
 ```
 
 where `</path/to/csv1> </path/to/csv2> ... </path/to/csvn>` are the paths to the CSV files to merge and `</path/to/output>` is the path to the output folder.
@@ -49,7 +49,7 @@ python run.py datasets/* outputs/ --ensemble ab --n-estimators 50 100 --seeds 34
 To merge the results of the experiments, use the following command:
 
 ```bash
-python merge.py outputs/csvs/* outputs/results.csv
+python agg.py outputs/csvs/* outputs/results.csv
 ```
 
 ## Clean
