@@ -1,77 +1,55 @@
-# Exclude a variety of commonly ignored directories.
+target-version = "py310"
+line-length = 80
+fix = true
+show-fixes = true
 exclude = [
-    ".bzr",
-    ".direnv",
-    ".eggs",
-    ".git",
-    ".git-rewrite",
-    ".hg",
-    ".ipynb_checkpoints",
-    ".mypy_cache",
-    ".nox",
-    ".pants.d",
-    ".pyenv",
-    ".pytest_cache",
-    ".pytype",
-    ".ruff_cache",
-    ".svn",
-    ".tox",
-    ".venv",
-    ".vscode",
-    "__pypackages__",
-    "_build",
-    "buck-out",
-    "build",
-    "dist",
-    "node_modules",
-    "site-packages",
-    "venv",
+    ".eggs/",
+    ".git/",
+    ".mypy_cache/",
+    ".conda/",
+    ".venv/",
+    ".tox/",
+    ".vscode/",
+    ".pytest_cache/",
+    ".test/",
+    "dist/",
 ]
 
-# Same as Black.
-line-length = 88
-indent-width = 4
-
-# Assume Python 3.10
-target-version = "py310"
-
-[lint]
-# Enable Pyflakes (`F`) and a subset of the pycodestyle (`E`)  codes by default.
-# Unlike Flake8, Ruff doesn't enable pycodestyle warnings (`W`) or
-# McCabe complexity (`C901`) by default.
-select = ["E4", "E7", "E9", "F"]
-ignore = []
-
-# Allow fix for all enabled rules (when `--fix`) is provided.
-fixable = ["ALL"]
-unfixable = []
-
-# Allow unused variables when underscore-prefixed.
-dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 
 [format]
-# Like Black, use double quotes for strings.
-quote-style = "double"
+preview = true
+docstring-code-line-length = 100
+docstring-code-format = true
 
-# Like Black, indent with spaces, rather than tabs.
-indent-style = "space"
+[lint]
+select = ["ALL"]
+ignore = [
+    "ANN",
+    "A005", # Shadowing built-in name 'type'
+    "ANN003", # Missing type annotation for kwargs
+    "CPY", # No copyright header
+    "D100", # Missing docstring in public module
+    "D101", # Missing docstring in public class
+    "D102", # Missing docstring in public method
+    "D103", # Missing docstring in public function
+    "D104", # Missing docstring in public package
+    "D105", # Missing docstring in magic method
+    "D106", # Missing docstring in public nested class
+    "D107", # Missing docstring in __init__
+    "D203", # 1 blank line required before class docstring
+    "D212", # Multi-line docstring summary should start at the first line
+    "N802", # Function name should be lowercase
+    "N803", # Argument name should be lowercase
+    "N806", # Variable in function should be lowercase
+    "TID252", 
+    "EXE",
+    "COM812",
+    "ISC001",
+]
+preview = true
+[lint.pylint]
+max-args = 20
+max-locals = 40
 
-# Like Black, respect magic trailing commas.
-skip-magic-trailing-comma = false
-
-# Like Black, automatically detect the appropriate line ending.
-line-ending = "auto"
-
-# Enable auto-formatting of code examples in docstrings. Markdown,
-# reStructuredText code/literal blocks and doctests are all supported.
-#
-# This is currently disabled by default, but it is planned for this
-# to be opt-out in the future.
-docstring-code-format = false
-
-# Set the line length limit used when formatting code snippets in
-# docstrings.
-#
-# This only has an effect when the `docstring-code-format` setting is
-# enabled.
-docstring-code-line-length = "dynamic"
+[lint.flake8-builtins]
+builtins-allowed-modules = ["typing"]

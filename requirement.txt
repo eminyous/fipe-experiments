@@ -1,6 +1,8 @@
-gurobipy
+gurobipy==11.0.3
 joblib
 numpy
 pandas
 scikit-learn
+lightgbm
+xgboost
 fipepy
