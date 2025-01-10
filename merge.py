@@ -1,5 +1,6 @@
 import argparse
 from pathlib import Path
+
 import pandas as pd
 
 
@@ -9,8 +10,15 @@ def main():
     parser.add_argument(
         "csvs",
         type=Path,
-        nargs='+',
+        nargs="+",
         help="CSV files to merge"
+    )
+
+    parser.add_argument(
+        "-r",
+        action="store_true",
+        default=False,
+        dest="recursive",
     )
 
     parser.add_argument(
@@ -20,11 +28,17 @@ def main():
     )
 
     args = parser.parse_args()
+    recursive = bool(args.recursive)
+    if recursive:
+        csvs = list(Path(args.csvs[0]).resolve().glob("**/*.csv"))
+    else:
+        csvs = list(map(Path, args.csvs))
+    output = Path(args.output).resolve()
 
-    dfs = [pd.read_csv(csv) for csv in args.csvs]
-    df = pd.concat(dfs)
-    df.to_csv(args.output, index=False)
+    dataframes = [pd.read_csv(csv) for csv in csvs]
+    dataframe = pd.concat(dataframes).reset_index(drop=True)
+    dataframe.to_csv(output, index=False)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
